@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "scripts": {
+    "editorconfig": "editorconfig-checker",
+    "yaspeller": "yaspeller --only-errors src/episodes",
+    "test": "npm run editorconfig && npm run yaspeller",
+    "build": "eleventy",
+    "mp3": "cd src/mp3 && rsync --archive --compress --delete --delete-excluded --exclude .DS_Store . wst@web-standards.ru:/var/www/web-standards.ru/podcast/episodes/",
+    "cover": "cd src && rsync --archive --compress cover.png wst@web-standards.ru:/var/www/web-standards.ru/podcast/",
+    "feed": "cd dist && rsync --archive --compress index.xml wst@web-standards.ru:/var/www/web-standards.ru/podcast/feed/",
+    "deploy": "npm run mp3 && npm run cover && npm run feed"
+  },
+  "engines": {
+    "node": ">=16",
+    "npm": ">=8"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^1.0.1",
+    "editorconfig-checker": "^4.0.2",
+    "html-minifier": "^4.0.0",
+    "markdown-it": "^13.0.0",
+    "music-metadata": "^7.12.3",
+    "pretty-data": "^0.40.0",
+    "yaspeller": "^8.0.1"
+  },
+  "dependencies": {
+    "nunjucks": "^3.2.3"
+  }
+}
