@@ -1,29 +1,26 @@
 {
   "private": true,
   "scripts": {
-    "editorconfig": "editorconfig-checker",
-    "yaspeller": "yaspeller --only-errors src/episodes",
-    "test": "npm run editorconfig && npm run yaspeller",
-    "build": "eleventy",
-    "mp3": "cd src/mp3 && rsync --archive --compress --delete --delete-excluded --exclude .DS_Store . wst@web-standards.ru:/var/www/web-standards.ru/podcast/episodes/",
-    "cover": "cd src && rsync --archive --compress cover.png wst@web-standards.ru:/var/www/web-standards.ru/podcast/",
-    "feed": "cd dist && rsync --archive --compress index.xml wst@web-standards.ru:/var/www/web-standards.ru/podcast/feed/",
-    "deploy": "npm run mp3 && npm run cover && npm run feed"
-  },
-  "engines": {
-    "node": ">=16",
-    "npm": ">=8"
+    "start": "eleventy --serve --quiet",
+    "11ty": "eleventy",
+    "pack": "gulp build",
+    "build": "rm -rf dist && npm run 11ty && npm run pack",
+    "deploy": "cd dist && rsync --archive --compress --delete --exclude=.DS_Store . 3lp.me:/var/www/3lp.me/html/"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.1",
-    "editorconfig-checker": "^4.0.2",
+    "@11ty/eleventy": "^1.0.0",
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-postcss": "^9.0.1",
+    "gulp-replace": "^1.1.3",
+    "gulp-uglify": "^3.0.2",
     "html-minifier": "^4.0.0",
-    "markdown-it": "^13.0.0",
-    "music-metadata": "^7.12.3",
-    "pretty-data": "^0.40.0",
-    "yaspeller": "^8.0.1"
-  },
-  "dependencies": {
-    "nunjucks": "^3.2.3"
+    "music-metadata": "^7.11.7",
+    "postcss": "^8.3.8",
+    "postcss-csso": "^6.0.0",
+    "postcss-import": "^14.0.2",
+    "pretty-data": "^0.40.0"
   }
 }

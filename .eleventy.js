@@ -5,8 +5,20 @@ const music = require('music-metadata');
 const prettydata = require('pretty-data');
 
 module.exports = (config) => {
+    config.addPassthroughCopy('src/favicon.ico');
+    config.addPassthroughCopy('src/fonts');
+    config.addPassthroughCopy('src/images');
+    config.addPassthroughCopy('src/scripts');
+    config.addPassthroughCopy('src/styles');
+    config.addPassthroughCopy('src/episodes/**/*.(jpg|mp3)');
+
+    config.addPairedShortcode('markdown', (content) => {
+        return markdown.render(content);
+    });
+
     config.addFilter('length', (path) => {
         const stats = fs.statSync(path);
+
         return stats.size;
     });
 
@@ -27,22 +39,6 @@ module.exports = (config) => {
         callback(null, duration);
     });
 
-    config.addFilter('ruDate', (value) => {
-        return value.toLocaleString('ru', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }).replace(' г.', '');
-    });
-
-    config.addFilter('enDate', (value) => {
-        return value.toLocaleString('en', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    });
-
     config.addFilter('htmlmin', (value) => {
         return htmlmin.minify(
             value, {
@@ -52,14 +48,26 @@ module.exports = (config) => {
         );
     });
 
-    config.addFilter('markdown', (value) => {
-        return markdown.render(value);
+    config.addTransform('htmlmin', (content, outputPath) => {
+        if(outputPath && outputPath.endsWith('.html')) {
+            const result = htmlmin.minify(
+                content, {
+                    removeComments: true,
+                    collapseWhitespace: true
+                }
+            );
+
+            return result;
+        }
+
+        return content;
     });
 
     config.addTransform('xmlmin', (content, outputPath) => {
         if(outputPath && outputPath.endsWith('.xml')) {
             return prettydata.pd.xmlmin(content);
         }
+
         return content;
     });
 
@@ -68,10 +76,14 @@ module.exports = (config) => {
             input: 'src',
             output: 'dist',
             includes: 'includes',
-            data: 'data'
+            layouts: 'layouts'
         },
         dataTemplateEngine: 'njk',
         markdownTemplateEngine: 'njk',
-        htmlTemplateEngine: 'njk'
+        htmlTemplateEngine: 'njk',
+        passthroughFileCopy: true,
+        templateFormats: [
+            'md', 'njk'
+        ],
     };
 };
