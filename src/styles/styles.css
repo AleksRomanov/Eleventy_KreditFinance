@@ -1,11 +1,12 @@
 /* Screen */
 
 @import 'fonts.css';
-@import 'box-sizing.css';
+@import 'global.css';
+@import 'blocks/header.css';
 
 @import 'blocks/page.css';
 @import 'blocks/box.css';
-@import 'blocks/header.css';
+
 @import 'blocks/social.css';
 @import 'blocks/patreon.css';
 @import 'blocks/main.css';

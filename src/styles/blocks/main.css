@@ -1,18 +1,18 @@
-/* Main */
+/*!* Main *!*/
 
-.main {
-    display: grid;
-    grid-auto-rows: min-content;
-    grid-gap: 5px;
-}
+/*.main {*/
+/*    display: grid;*/
+/*    grid-auto-rows: min-content;*/
+/*    grid-gap: 5px;*/
+/*}*/
 
-.main__intro {
-    background-color: white;
-}
+/*.main__intro {*/
+/*    background-color: white;*/
+/*}*/
 
-.main__title {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-}
+/*.main__title {*/
+/*    position: absolute;*/
+/*    width: 1px;*/
+/*    height: 1px;*/
+/*    overflow: hidden;*/
+/*}*/

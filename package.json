@@ -22,5 +22,8 @@
     "postcss-csso": "^6.0.0",
     "postcss-import": "^14.0.2",
     "pretty-data": "^0.40.0"
+  },
+  "dependencies": {
+    "antd": "^4.20.7"
   }
 }
